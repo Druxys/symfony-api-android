@@ -1,4 +1,7 @@
 {
+    "behat/transliterator": {
+        "version": "v1.5.0"
+    },
     "doctrine/annotations": {
         "version": "1.13",
         "recipe": {
@@ -92,6 +95,9 @@
             "./config/packages/fos_rest.yaml"
         ]
     },
+    "gedmo/doctrine-extensions": {
+        "version": "v3.7.0"
+    },
     "jms/metadata": {
         "version": "2.6.1"
     },
@@ -132,6 +138,18 @@
     },
     "psr/log": {
         "version": "1.1.4"
+    },
+    "stof/doctrine-extensions-bundle": {
+        "version": "1.7",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "1.2",
+            "ref": "e805aba9eff5372e2d149a9ff56566769e22819d"
+        },
+        "files": [
+            "./config/packages/stof_doctrine_extensions.yaml"
+        ]
     },
     "symfony/cache": {
         "version": "v5.4.8"
