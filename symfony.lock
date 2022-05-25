@@ -23,6 +23,9 @@
     "doctrine/common": {
         "version": "3.3.0"
     },
+    "doctrine/data-fixtures": {
+        "version": "1.5.3"
+    },
     "doctrine/dbal": {
         "version": "3.3.6"
     },
@@ -41,6 +44,18 @@
             "./config/packages/doctrine.yaml",
             "./src/Entity/.gitignore",
             "./src/Repository/.gitignore"
+        ]
+    },
+    "doctrine/doctrine-fixtures-bundle": {
+        "version": "3.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "3.0",
+            "ref": "1f5514cfa15b947298df4d771e694e578d4c204d"
+        },
+        "files": [
+            "./src/DataFixtures/AppFixtures.php"
         ]
     },
     "doctrine/doctrine-migrations-bundle": {
@@ -94,6 +109,9 @@
         "files": [
             "./config/packages/fos_rest.yaml"
         ]
+    },
+    "fzaninotto/faker": {
+        "version": "v1.9.2"
     },
     "gedmo/doctrine-extensions": {
         "version": "v3.7.0"
@@ -266,6 +284,12 @@
     "symfony/polyfill-php81": {
         "version": "v1.25.0"
     },
+    "symfony/property-access": {
+        "version": "v5.4.8"
+    },
+    "symfony/property-info": {
+        "version": "v5.4.7"
+    },
     "symfony/proxy-manager-bridge": {
         "version": "v5.4.6"
     },
@@ -285,7 +309,28 @@
     "symfony/runtime": {
         "version": "v5.4.8"
     },
+    "symfony/security-bundle": {
+        "version": "5.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "5.3",
+            "ref": "98f1f2b0d635908c2b40f3675da2d23b1a069d30"
+        },
+        "files": [
+            "./config/packages/security.yaml"
+        ]
+    },
     "symfony/security-core": {
+        "version": "v5.4.8"
+    },
+    "symfony/security-csrf": {
+        "version": "v5.4.3"
+    },
+    "symfony/security-guard": {
+        "version": "v5.4.3"
+    },
+    "symfony/security-http": {
         "version": "v5.4.8"
     },
     "symfony/service-contracts": {

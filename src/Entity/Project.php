@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProjectRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,11 +18,6 @@ class Project
      * @ORM\Column(type="integer")
      */
     private $id;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -47,21 +44,19 @@ class Project
      */
     private $limit_date;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Tier::class, mappedBy="project")
+     */
+    private $tier_id;
+
+    public function __construct()
+    {
+        $this->tier_id = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     public function getTitle(): ?string
@@ -120,6 +115,36 @@ class Project
     public function setLimitDate(\DateTimeInterface $limit_date): self
     {
         $this->limit_date = $limit_date;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Tier>
+     */
+    public function getTierId(): Collection
+    {
+        return $this->tier_id;
+    }
+
+    public function addTierId(Tier $tierId): self
+    {
+        if (!$this->tier_id->contains($tierId)) {
+            $this->tier_id[] = $tierId;
+            $tierId->setProject($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTierId(Tier $tierId): self
+    {
+        if ($this->tier_id->removeElement($tierId)) {
+            // set the owning side to null (unless already changed)
+            if ($tierId->getProject() === $this) {
+                $tierId->setProject(null);
+            }
+        }
 
         return $this;
     }
