@@ -37,6 +37,11 @@ class Tier
      */
     private $shipping;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Project::class, inversedBy="tier_id")
+     */
+    private $project;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +91,18 @@ class Tier
     public function setShipping(?\DateTimeInterface $shipping): self
     {
         $this->shipping = $shipping;
+
+        return $this;
+    }
+
+    public function getProject(): ?Project
+    {
+        return $this->project;
+    }
+
+    public function setProject(?Project $project): self
+    {
+        $this->project = $project;
 
         return $this;
     }
