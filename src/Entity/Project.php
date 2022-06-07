@@ -13,11 +13,13 @@ use Doctrine\ORM\Mapping as ORM;
 class Project
 {
     /**
+     * @var int
+     *
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -40,7 +42,7 @@ class Project
     private $contributors;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      */
     private $limit_date;
 
@@ -49,10 +51,24 @@ class Project
      */
     private $tier_id;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $description;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Media::class, mappedBy="project")
+     */
+    private $media;
+
+
+
     public function __construct()
     {
         $this->tier_id = new ArrayCollection();
+        $this->media = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -148,4 +164,48 @@ class Project
 
         return $this;
     }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Media>
+     */
+    public function getMedia(): Collection
+    {
+        return $this->media;
+    }
+
+    public function addMedium(Media $medium): self
+    {
+        if (!$this->media->contains($medium)) {
+            $this->media[] = $medium;
+            $medium->setProject($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMedium(Media $medium): self
+    {
+        if ($this->media->removeElement($medium)) {
+            // set the owning side to null (unless already changed)
+            if ($medium->getProject() === $this) {
+                $medium->setProject(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }
