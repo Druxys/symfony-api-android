@@ -49,7 +49,7 @@ class Project
     /**
      * @ORM\OneToMany(targetEntity=Tier::class, mappedBy="project")
      */
-    private $tier_id;
+    private $tier;
 
     /**
      * @ORM\Column(type="text")
@@ -61,11 +61,16 @@ class Project
      */
     private $media;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="projects")
+     */
+    private $user;
+
 
 
     public function __construct()
     {
-        $this->tier_id = new ArrayCollection();
+        $this->tier = new ArrayCollection();
         $this->media = new ArrayCollection();
     }
 
@@ -138,27 +143,27 @@ class Project
     /**
      * @return Collection<int, Tier>
      */
-    public function getTierId(): Collection
+    public function getTier(): Collection
     {
-        return $this->tier_id;
+        return $this->tier;
     }
 
-    public function addTierId(Tier $tierId): self
+    public function addTier(Tier $tier): self
     {
-        if (!$this->tier_id->contains($tierId)) {
-            $this->tier_id[] = $tierId;
-            $tierId->setProject($this);
+        if (!$this->tier->contains($tier)) {
+            $this->tier[] = $tier;
+            $tier->setProject($this);
         }
 
         return $this;
     }
 
-    public function removeTierId(Tier $tierId): self
+    public function removeTier(Tier $tier): self
     {
-        if ($this->tier_id->removeElement($tierId)) {
+        if ($this->tier->removeElement($tier)) {
             // set the owning side to null (unless already changed)
-            if ($tierId->getProject() === $this) {
-                $tierId->setProject(null);
+            if ($tier->getProject() === $this) {
+                $tier->setProject(null);
             }
         }
 
@@ -203,6 +208,18 @@ class Project
                 $medium->setProject(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

@@ -8,9 +8,18 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 
 class ProjectFixtures extends Fixture implements DependentFixtureInterface
 {
+    private UserPasswordHasherInterface $passwordHasher;
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
+
     /**
      * @param ObjectManager $manager
      *
@@ -25,8 +34,12 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
 
             $user = (new User())
                 ->setUsername($faker->userName)
-                ->setEmail($faker->email)
-                ->setPassword('password');
+                ->setEmail($faker->email);
+            $hashedPassword = $this->passwordHasher->hashPassword(
+                $user,
+                'password'
+            );
+            $user->setPassword($hashedPassword);
 
             $manager->persist($user);
             $manager->flush();
@@ -38,7 +51,7 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
                 ->setLimitDate($faker->dateTime())
                 ->setPledge($faker->randomFloat(2, 0, 13000.00))
                 ->setContributors($faker->numberBetween(1, 100))
-               // ->setUser($user)
+                // ->setUser($user)
                 ->setGoal($faker->randomFloat(100, 5000.00, 10000.00));
 
             $manager->persist($project);
