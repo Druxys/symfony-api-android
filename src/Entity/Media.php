@@ -33,16 +33,6 @@ class Media
      */
     private $project;
 
-    /**
-     * @ORM\Column(type="datetime_immutable")
-     */
-    private $created_at;
-
-    /**
-     * @ORM\Column(type="datetime_immutable", nullable=true)
-     */
-    private $updated_at;
-
     public function __construct()
     {
         $this->project = new ArrayCollection();

@@ -2,7 +2,9 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Media;
 use App\Entity\Project;
+use App\Entity\Tier;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -51,11 +53,32 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
                 ->setLimitDate($faker->dateTime())
                 ->setPledge($faker->randomFloat(2, 0, 13000.00))
                 ->setContributors($faker->numberBetween(1, 100))
-                // ->setUser($user)
+                ->setUser($user)
                 ->setGoal($faker->randomFloat(100, 5000.00, 10000.00));
-
             $manager->persist($project);
             $manager->flush();
+
+
+            // Fixture for Media
+            for ($j = 0; $j < $faker->numberBetween(1, 3); $j++) {
+                $media = (new Media())
+                    ->setSource($faker->imageUrl())
+                    ->setFilename($faker->sentence)
+                    ->setProject($project);
+                $manager->persist($media);
+                $manager->flush();
+            }
+
+            for ($j = 0; $j < $faker->numberBetween(0, 5); $j++) {
+                $tier = (new Tier())
+                    ->setProject($project)
+                    ->setName($faker->sentence)
+                    ->setDescription($faker->text)
+                    ->setPrice($faker->randomFloat(2, 0, 1000.00))
+                    ->setShipping($faker->dateTime());
+                $manager->persist($tier);
+                $manager->flush();
+            }
         }
 
     }
