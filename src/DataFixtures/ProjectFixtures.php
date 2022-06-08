@@ -69,7 +69,7 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
                 $manager->flush();
             }
 
-            for ($j = 0; $j < $faker->numberBetween(0, 5); $j++) {
+            for ($j = 0; $j < $faker->numberBetween(1, 5); $j++) {
                 $tier = (new Tier())
                     ->setProject($project)
                     ->setName($faker->sentence)
