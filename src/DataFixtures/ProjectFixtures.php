@@ -62,7 +62,7 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
             // Fixture for Media
             for ($j = 0; $j < $faker->numberBetween(1, 3); $j++) {
                 $media = (new Media())
-                    ->setSource($faker->imageUrl())
+                    ->setSource('https://loremflickr.com/640/360')
                     ->setFilename($faker->sentence)
                     ->setProject($project);
                 $manager->persist($media);
